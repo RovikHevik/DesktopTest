@@ -5,9 +5,6 @@ namespace DesktopTest.Logic
 {
     static class DesktopLogic
     {
-        public static Application StartApp(string pathToExe)
-        {
-            return Application.Launch(pathToExe);
-        }
+        public static Application StartApp(string pathToExe) => Application.Launch(pathToExe);
     }
 }

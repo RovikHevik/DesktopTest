@@ -15,10 +15,7 @@ namespace DesktopTest.Logic
     {
        FlaUI.Core.Application app;
 
-        public BrowserLogic(string pathToExe)
-        {
-            app = DesktopLogic.StartApp(pathToExe);
-        }
+        public BrowserLogic(string pathToExe) => app = DesktopLogic.StartApp(pathToExe);
         public bool InputText(TextModel model)
         {
             using (var automation = new UIA3Automation())
