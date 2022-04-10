@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Logic\BrowserLogic.cs" />
     <Compile Include="Logic\DesktopLogic.cs" />
+    <Compile Include="Logic\GrammarlyLogic.cs" />
     <Compile Include="Logic\Interface\ITextInput.cs" />
     <Compile Include="Logic\WordLogic.cs" />
     <Compile Include="Model\TextModel.cs" />

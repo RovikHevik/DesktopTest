@@ -2,10 +2,7 @@
 using DesktopTest.Logic.Interface;
 using DesktopTest.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace DesktopTest
 {
@@ -13,11 +10,14 @@ namespace DesktopTest
     {
         const string PathToWord = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
         const string PathToMozila = @"C:\Program Files\Firefox Developer Edition\firefox.exe";
-        readonly static TextModel TextToTest = new TextModel() { Text = "what r u know anout thes", ErrorCount = 2 };
+        private static TextModel modelToTest = new TextModel() { Text = "what r u know anout thes", ErrorCount = 2 };
         static void Main(string[] args)
         {
-            WordLogic wordLogic = new WordLogic(PathToWord);
-            Console.WriteLine(wordLogic.InputText(TextToTest));
+            GrammarlyLogic grammarlyLogic = new GrammarlyLogic();
+            ITextInput wordLogic = new WordLogic(PathToWord);
+            wordLogic.InputText(modelToTest);
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            grammarlyLogic.IsValueCorrect(modelToTest);
             Console.ReadKey();
         }
     }

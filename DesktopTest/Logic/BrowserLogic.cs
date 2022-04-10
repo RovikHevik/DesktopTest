@@ -16,11 +16,17 @@ namespace DesktopTest.Logic
        FlaUI.Core.Application app;
 
         public BrowserLogic(string pathToExe) => app = DesktopLogic.StartApp(pathToExe);
+
+        public bool CloseApp()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool InputText(TextModel model)
         {
             using (var automation = new UIA3Automation())
             {
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Thread.Sleep(TimeSpan.FromSeconds(4));
 
                 var window = app.GetMainWindow(automation);
 
@@ -29,7 +35,6 @@ namespace DesktopTest.Logic
                 Keyboard.Type(model.Text);
                 Keyboard.Press(VirtualKeyShort.ENTER);
                 app.WaitWhileBusy(TimeSpan.FromMilliseconds(500));
-
                 return true;
             }
         }

@@ -1,10 +1,12 @@
 ﻿using DesktopTest.Model;
-using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
 using System;
 using System.Windows;
 using System.Threading;
 using DesktopTest.Logic.Interface;
+using FlaUI.Core.Input;
+using FlaUI.Core.Tools;
+using FlaUI.Core.AutomationElements;
 
 namespace DesktopTest.Logic
 {
@@ -14,16 +16,31 @@ namespace DesktopTest.Logic
 
         public WordLogic(string pathToExe) => app = DesktopLogic.StartApp(pathToExe);
 
+        public bool CloseApp()
+        {
+            app.Close();
+            return true;
+        }
+
         public bool InputText(TextModel model)
         {
             try
             {
                 using (var automation = new UIA3Automation())
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(10));
+                    Console.WriteLine($"{app.Name} open: successfully");
+                    Thread.Sleep(TimeSpan.FromSeconds(2));
                     var window = app.GetMainWindow(automation);
-                    var button = window.FindFirstDescendant(cf => cf.ByAutomationId("AIOStartDocument")).AsButton();
+                    var button = Retry.Find(() => window.FindFirstDescendant(cf => cf.ByName("Новый документ")),
+                    new RetrySettings
+                            {
+                                Timeout = TimeSpan.FromSeconds(2),
+                                Interval = TimeSpan.FromMilliseconds(500)
+                            }
+                        ); 
                     button.Click();
+                    Keyboard.Type(model.Text);
+                    Console.WriteLine($"{app.Name} write: successfully");
                     return true;
                 }
             }
@@ -33,7 +50,7 @@ namespace DesktopTest.Logic
                 MessageBox.Show(ex.Message);
 
                 return false;
-            }        
+            }
         }
     }
 }
