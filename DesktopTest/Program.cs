@@ -10,7 +10,7 @@ namespace DesktopTest
     {
         const string PathToWord = @"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE";
         const string PathToGrammarly = @"C:\Users\HohloCit\AppData\Local\Grammarly\DesktopIntegrations\Grammarly.Desktop.exe";
-        private static TextModel modelToTest = new TextModel() { Text = "Даша лох наелась блох", ErrorCount = 2 };
+        private static TextModel modelToTest = new TextModel() { Text = "what r u know anout thes", ErrorCount = 2 };
         static void Main(string[] args)
         {
             GrammarlyLogic grammarlyLogic = new GrammarlyLogic(PathToGrammarly);
