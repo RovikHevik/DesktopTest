@@ -5,6 +5,8 @@ using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Input;
 using FlaUI.Core.WindowsAPI;
 using FlaUI.UIA3;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -13,30 +15,36 @@ namespace DesktopTest.Logic
 {
     internal class BrowserLogic : ITextInput
     {
-       FlaUI.Core.Application app;
-
-        public BrowserLogic(string pathToExe) => app = DesktopLogic.StartApp(pathToExe);
+        IWebDriver driver;
+        public BrowserLogic()
+        {
+            driver = new FirefoxDriver(@"C:\Users\HohloCit\source\repos\DesktopTest\DesktopTest/");
+            driver.Manage().Window.Maximize();
+            Console.WriteLine($"Firefox start: successfully");
+        }
 
         public bool CloseApp()
         {
-            throw new NotImplementedException();
+            try
+            {
+                driver.Close();
+                driver.Quit();
+                Console.WriteLine($"Firefox close: successfully");
+                return true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Firefox close: failed");
+                return false;
+            }
         }
+
 
         public bool InputText(TextModel model)
         {
-            using (var automation = new UIA3Automation())
-            {
-                Thread.Sleep(TimeSpan.FromSeconds(4));
-
-                var window = app.GetMainWindow(automation);
-
-                var urlEditor = window.FindFirstDescendant(cv => cv.ByAutomationId("urlbar-input"));
-                urlEditor.Focus();
-                Keyboard.Type(model.Text);
-                Keyboard.Press(VirtualKeyShort.ENTER);
-                app.WaitWhileBusy(TimeSpan.FromMilliseconds(500));
-                return true;
-            }
+            driver.Navigate().GoToUrl($"https://translate.google.com/?sl=ru&tl=en&text={model.Text}&op=translate");
+            Console.WriteLine($"Firefox: {driver.Url} successfully");
+            return true;
         }
     }
 }

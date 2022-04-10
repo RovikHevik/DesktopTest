@@ -8,10 +8,10 @@ namespace DesktopTest.Logic
     internal class GrammarlyLogic
     {
         Application app;
-        public GrammarlyLogic()
+        public GrammarlyLogic(string pathToExe)
         {
-            app = Application.Attach(@"C:\Users\HohloCit\AppData\Local\Grammarly\DesktopIntegrations\Grammarly.Desktop.exe");
-            Console.WriteLine($"{app.Name} open: successfully");
+            app = Application.Attach(pathToExe);
+            Console.WriteLine($"{app.Name}: successfully, with proccesId: {app.ProcessId}");
         }
            
         

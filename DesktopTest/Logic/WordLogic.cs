@@ -14,12 +14,23 @@ namespace DesktopTest.Logic
     {
         FlaUI.Core.Application app;
 
-        public WordLogic(string pathToExe) => app = DesktopLogic.StartApp(pathToExe);
+        public WordLogic(string pathToExe)
+        {
+            app = DesktopLogic.StartApp(pathToExe);
+            Console.WriteLine($"{app.Name} start: successfully, with processId: {app.ProcessId}");
+        }
 
         public bool CloseApp()
         {
-            app.Close();
-            return true;
+            try
+            {
+                app.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool InputText(TextModel model)
@@ -28,7 +39,6 @@ namespace DesktopTest.Logic
             {
                 using (var automation = new UIA3Automation())
                 {
-                    Console.WriteLine($"{app.Name} open: successfully");
                     Thread.Sleep(TimeSpan.FromSeconds(2));
                     var window = app.GetMainWindow(automation);
                     var button = Retry.Find(() => window.FindFirstDescendant(cf => cf.ByName("Новый документ")),
