@@ -1,15 +1,8 @@
 ﻿using DesktopTest.Logic.Interface;
 using DesktopTest.Model;
-using FlaUI.Core;
-using FlaUI.Core.AutomationElements;
-using FlaUI.Core.Input;
-using FlaUI.Core.WindowsAPI;
-using FlaUI.UIA3;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace DesktopTest.Logic
 {
@@ -42,9 +35,16 @@ namespace DesktopTest.Logic
 
         public bool InputText(TextModel model)
         {
-            driver.Navigate().GoToUrl($"https://translate.google.com/?sl=ru&tl=en&text={model.Text}&op=translate");
-            Console.WriteLine($"Firefox: {driver.Url} successfully");
-            return true;
+            try
+            {
+                driver.Navigate().GoToUrl($"https://translate.google.com/?sl=ru&tl=en&text={model.Text}&op=translate");
+                Console.WriteLine($"Firefox: {driver.Url} successfully");
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

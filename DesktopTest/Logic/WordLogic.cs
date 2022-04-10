@@ -6,7 +6,6 @@ using System.Threading;
 using DesktopTest.Logic.Interface;
 using FlaUI.Core.Input;
 using FlaUI.Core.Tools;
-using FlaUI.Core.AutomationElements;
 
 namespace DesktopTest.Logic
 {
@@ -50,7 +49,7 @@ namespace DesktopTest.Logic
                         ); 
                     button.Click();
                     Keyboard.Type(model.Text);
-                    Console.WriteLine($"{app.Name} write: successfully");
+                    Console.WriteLine($"{app.Name} write: \"{model.Text}\" with {model.ErrorCount} errors");
                     return true;
                 }
             }

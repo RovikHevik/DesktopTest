@@ -11,7 +11,7 @@ namespace DesktopTest.Logic
         public GrammarlyLogic(string pathToExe)
         {
             app = Application.Attach(pathToExe);
-            Console.WriteLine($"{app.Name}: successfully, with proccesId: {app.ProcessId}");
+            Console.WriteLine($"{app.Name}: successfully, with processId: {app.ProcessId}");
         }
            
         
@@ -19,11 +19,11 @@ namespace DesktopTest.Logic
         {
             using (var automation = new UIA3Automation())
             {
+                var screen = app.GetMainWindow(automation);
                 int count = 0;
-                var window = app.GetMainWindow(automation);
-                Console.WriteLine($"{app.Name} count: {window.FindFirstDescendant(cf => cf.ByAutomationId("AlertsCounterLabel")).Name}");
+                Console.WriteLine($"{app.Name} count {screen.FindFirstDescendant(cf => cf.ByAutomationId("AlertsCounterLabel")).Name} errors");
                 if (count == model.ErrorCount) return true;
-                else return false;
+                else                           return false;
             }
         }
     }
